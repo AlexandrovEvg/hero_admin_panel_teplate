@@ -2,6 +2,7 @@ const initialState = {
   heroes: [],
   heroesLoadingStatus: 'idle',
   filters: [],
+  filtersLoadingStatus: 'loading',
 };
 
 const reducer = (state = initialState, action) => {
@@ -21,6 +22,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         heroesLoadingStatus: 'error',
+      };
+    case 'FILTERS_MENU':
+      return {
+        ...state,
+        filters: action.payload,
+        filtersLoadingStatus: 'idle',
       };
     default:
       return state;
