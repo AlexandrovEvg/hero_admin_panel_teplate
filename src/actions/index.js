@@ -23,3 +23,17 @@ export const filtersMenu = (filters) => {
     payload: filters,
   };
 };
+
+export const filterResultAction = (heroes, value) => {
+  return {
+    type: 'FILTER_RESULT',
+    payload: heroes.filter((item) => item.element === value),
+  };
+};
+
+export const filterName = (value) => {
+  return {
+    type: 'FILTER_NAME',
+    payload: value,
+  };
+};

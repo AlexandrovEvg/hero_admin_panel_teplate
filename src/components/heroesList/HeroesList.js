@@ -1,5 +1,5 @@
 import { useHttp } from '../../hooks/http.hook';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -16,7 +16,9 @@ import Spinner from '../spinner/Spinner';
 // Удаление идет и с json файла при помощи метода DELETE
 
 const HeroesList = () => {
-  const { heroes, heroesLoadingStatus } = useSelector((state) => state);
+  const { heroes, heroesLoadingStatus, filterResult } = useSelector(
+    (state) => state
+  );
   const dispatch = useDispatch();
   const { request } = useHttp();
 
@@ -29,7 +31,7 @@ const HeroesList = () => {
     // eslint-disable-next-line
   }, []);
 
-  const removeHero = (id) => {
+  const onDelete = (id) => {
     const arr = heroes.filter((item) => item.id !== id);
     dispatch(heroesFetched(arr));
     request(`http://localhost:3001/heroes/${id}`, 'DELETE')
@@ -47,10 +49,29 @@ const HeroesList = () => {
     if (arr.length === 0) {
       return <h5 className="text-center mt-5">Героев пока нет</h5>;
     }
+    let heroesArray;
 
-    return arr.map(({ id, ...props }) => {
+    switch (filterResult) {
+      case 'fire':
+        heroesArray = arr.filter((item) => item.element === 'fire');
+        break;
+      case 'wind':
+        heroesArray = arr.filter((item) => item.element === 'wind');
+        break;
+      case 'water':
+        heroesArray = arr.filter((item) => item.element === 'water');
+        break;
+      case 'earth':
+        heroesArray = arr.filter((item) => item.element === 'earth');
+        break;
+      default:
+        heroesArray = arr.slice();
+        break;
+    }
+
+    return heroesArray.map(({ id, ...props }) => {
       return (
-        <HeroesListItem key={id} {...props} removeHero={() => removeHero(id)} />
+        <HeroesListItem key={id} {...props} onDelete={() => onDelete(id)} />
       );
     });
   };

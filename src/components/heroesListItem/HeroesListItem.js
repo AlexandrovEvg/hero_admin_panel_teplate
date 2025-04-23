@@ -1,6 +1,6 @@
 import 'animate.css';
 
-const HeroesListItem = ({ name, description, element, removeHero }) => {
+const HeroesListItem = ({ name, description, element, onDelete }) => {
   let elementClassName;
 
   switch (element) {
@@ -36,7 +36,7 @@ const HeroesListItem = ({ name, description, element, removeHero }) => {
       </div>
       <span className="position-absolute top-0 start-100 translate-middle badge border rounded-pill bg-light">
         <button
-          onClick={removeHero}
+          onClick={onDelete}
           type="button"
           className="btn-close btn-close"
           aria-label="Close"

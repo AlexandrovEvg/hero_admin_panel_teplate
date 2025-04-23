@@ -15,7 +15,9 @@ import { v4 as uuidv4 } from 'uuid';
 // данных из фильтров
 
 const HeroesAddForm = () => {
-  const { heroes } = useSelector((state) => state);
+  const { heroes, filters, filtersLoadingStatus } = useSelector(
+    (state) => state
+  );
   const dispatch = useDispatch();
   const { request } = useHttp();
 
@@ -44,6 +46,14 @@ const HeroesAddForm = () => {
       formik.values.description = '';
       formik.values.element = 'Я владею элементом...';
     },
+  });
+
+  const options = filters.map((el) => {
+    return (
+      <option key={el.key} value={el.element}>
+        {el.label}
+      </option>
+    );
   });
 
   return (
@@ -105,11 +115,11 @@ const HeroesAddForm = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           >
-            <option>Я владею элементом...</option>
-            <option value="fire">Огонь</option>
-            <option value="water">Вода</option>
-            <option value="wind">Ветер</option>
-            <option value="earth">Земля</option>
+            {filtersLoadingStatus === 'idle' ? (
+              options
+            ) : (
+              <option>Что-то пошло не так...</option>
+            )}
           </select>
           {formik.errors.element && formik.touched.element ? (
             <div className="error">Выберите элемент</div>

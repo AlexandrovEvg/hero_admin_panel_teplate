@@ -19,36 +19,40 @@
       "element": "water"
     }
   ],
-
   "filters": [
     {
       "id": 1,
       "element": "all",
       "text": "Все",
+      "label": "Я владею элементом...",
       "style": "btn-outline-dark active"
     },
     {
       "id": 2,
       "element": "fire",
       "text": "Огонь",
+      "label": "Огонь",
       "style": "btn-danger"
     },
     {
       "id": 3,
       "element": "water",
       "text": "Вода",
+      "label": "Вода",
       "style": "btn-primary"
     },
     {
       "id": 4,
       "element": "wind",
       "text": "Ветер",
+      "label": "Ветер",
       "style": "btn-success"
     },
     {
       "id": 5,
       "element": "earth",
       "text": "Земля",
+      "label": "Земля",
       "style": "btn-secondary"
     }
   ]
