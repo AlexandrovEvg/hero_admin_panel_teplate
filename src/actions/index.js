@@ -1,21 +1,8 @@
 import {
-  heroesFetching,
-  heroesFetched,
-  heroesFetchingError,
-} from '../components/heroesList/heroesSlice';
-
-import {
   filtersFetching,
   filtersFetched,
   filtersFetchingError,
 } from '../components/heroesFilters/filtersSlice';
-
-export const fetchHeroes = (request) => (dispatch) => {
-  dispatch(heroesFetching());
-  request('http://localhost:3001/heroes')
-    .then((data) => dispatch(heroesFetched(data)))
-    .catch(() => dispatch(heroesFetchingError()));
-};
 
 export const fetchFilters = (request) => (dispatch) => {
   dispatch(filtersFetching());
@@ -23,12 +10,3 @@ export const fetchFilters = (request) => (dispatch) => {
     .then((data) => dispatch(filtersFetched(data)))
     .catch(filtersFetchingError());
 };
-
-// export const filterName = (value) => (dispatch) => {
-//   setTimeout(() => {
-//     dispatch({
-//       type: 'FILTER_NAME',
-//       payload: value,
-//     });
-//   }, 1000);
-// };

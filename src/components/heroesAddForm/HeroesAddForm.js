@@ -8,13 +8,16 @@ import { useCallback, useState, useEffect } from 'react';
 
 const HeroesAddForm = () => {
   const { filters } = useSelector((state) => state.filters);
-
   const { filtersLoadingStatus } = useSelector((state) => state.filters);
   const dispatch = useDispatch();
   const { request } = useHttp();
 
   const formik = useFormik({
-    initialValues: { name: '', description: '', element: '' },
+    initialValues: {
+      name: '',
+      description: '',
+      element: '',
+    },
     validationSchema: Yup.object({
       name: Yup.string()
         .min(5, 'Минимум 5 символов')
@@ -24,7 +27,7 @@ const HeroesAddForm = () => {
         .matches(/(fire|water|wind|earth)/)
         .required('Выберите элемент!'),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       let id = uuidv4();
       dispatch(heroAdd({ id, ...values }));
       const obj = JSON.stringify({ id, ...values });
@@ -33,9 +36,7 @@ const HeroesAddForm = () => {
         .catch((e) => {
           throw new Error(e.text);
         });
-      formik.values.name = '';
-      formik.values.description = '';
-      formik.values.element = 'Я владею элементом...';
+      resetForm();
     },
   });
 
